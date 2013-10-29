@@ -77,14 +77,9 @@
   <!-- <ul> -->
   <!--   <li>TDD + ideas del domain&#45;driven design y análisis orientado a objetos</li> -->
   <!-- </ul> -->
-  <blockquote>BDD builds upon TDD by formalising the good habits of the best TDD practitioners.</blockquote>
-  <cite>Matt Wynne</cite>
-</section>
-
-<section class="slide">
-  <h2>Buenas prácticas</h2>
+  <blockquote>BDD builds upon TDD by formalising the good habits of the best TDD practitioners (Matt Wynne).</blockquote>
   <ol>
-    <li>Trabajar desde afuera hacia adentro</li>
+    <li>Trabajar desde fuera hacia adentro</li>
     <li>Usar ejemplos para escribir la especificación (escenarios)</li>
     <li>Usar un lenguaje unificado</li>
   </ol>
@@ -97,6 +92,7 @@
 <section class="slide">
   <h2>Test::Unit</h2>
   <ul>
+    <li><a href="http://test-unit.rubyforge.org/">http://test-unit.rubyforge.org/</a></li>
     <li>Estilo <em>xUnit</em></li>
     <li>En la biblioteca estándar hasta Ruby 1.8</li>
     <li>Sustituido por Minitest en versiones recientes de Ruby</li>
@@ -115,6 +111,7 @@
 <section class="slide">
   <h2>RSpec</h2>
   <ul>
+    <li><a href="https://relishapp.com/rspec">https://relishapp.com/rspec</a></li>
     <li>Orientado al BDD</li>
     <li>Muy popular y con un montón de funcionalidades</li>
     <li>Busca que las especificaciones se puedan leer de forma natural natural</li>
@@ -136,6 +133,7 @@
 <section class="slide">
   <h2>Cucumber</h2>
   <ul>
+    <li><a href="https://github.com/cucumber/cucumber">https://github.com/cucumber/cucumber</a>
     <li>Construido sobre RSpec</li>
     <li>Alcanzó gran popularidad</li>
     <li>Muy cercano al lenguaje del cliente (que se supone que se debe implicar al escribir pruebas)</li>
@@ -159,7 +157,7 @@ Feature: Search courses
 <section class="slide">
   <h2>Minitest</h2>
   <ul>
-    <li>El <em>new kid on the block</em></li>
+    <li><a href="https://github.com/seattlerb/minitest">https://github.com/seattlerb/minitest</a></li>
     <li>Framework ligero y relativamente pequeño (en código y funcionalidad)</li>
     <li>Tiene un montón de extensiones</li>
     <li>En la biblioteca estándar de Ruby desde la 1.9</li>
@@ -175,12 +173,13 @@ Feature: Search courses
 <section class="slide">
   <h2>Tipos de pruebas</h2>
   <ul>
-    <li><strong>Unitarias (modelos)</strong></li>
-    <li>Rutas</li>
-    <li>Controlador</li>
-    <li>Vistas</li>
-    <li><strong>Helpers</strong></li>
     <li><strong>Funcionales (features)</strong></li>
+    <li>Rutas</li>
+    <li>Vistas</li>
+    <li>Controlador</li>
+    <li><strong>Helpers</strong></li>
+    <li><strong>Mailers</strong></li>
+    <li><strong>Modelos</strong></li>
   </ul>
 </section>
 
@@ -211,20 +210,10 @@ Feature: Search courses
     <li>minitest-rails: soporte para el DSL al estilo <em>Spec</em></li>
     <li>minitest-rails-capybara: integración con Capybara</li>
     <li>minitest-reporters: permite usar diferentes modos de indicar el progreso de las pruebas.</li>
-    <li>Hay otras extensiones interesantes</li>
   </ul>
-</section>
-
-<section class="slide">
-  <h2>Configuración de Minitest</h2>
   <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  config.generators do |g|
       g.test_framework :mini_test, spec: true, fixture: false
     end</textarea>
-
-  <ul>
-    <li>Los generadores usarán Minitest con la sintaxis de <em>Spec</em></li>
-    <li>Desactiva los <em>fixtures</em></li>
-  </ul>
 </section>
 
 <section class="slide">
@@ -250,6 +239,24 @@ Feature: Search courses
 end</textarea>
 </section>
 
+<section class="slide">
+  <h2>Capybara</h2>
+  <ul>
+    <li><a href="https://github.com/jnicklas/capybara">https://github.com/jnicklas/capybara</a></li>
+    <li>Permite simular la interacción con la aplicación</li>
+    <li>Soporta varios <em>backends</em>:
+      <ul>
+        <li><a href="https://github.com/brynary/rack-test">rack_test</a></li>
+        <li>Selenium (<a href="https://code.google.com/p/selenium/">selenium-webdriver</a></li>
+        <li>Webkit (<a href="https://github.com/thoughtbot/capybara-webkit">capybara-webkit</a>)</li>
+        <li>Phantomjs (<a href="https://github.com/jonleighton/poltergeist">poltergeist</a>)</li>
+      </ul>
+    </li>
+  </ul>
+  <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Wet-capyvara-in-Brazil.jpg/800px-Wet-capyvara-in-Brazil.jpg">
+</section>
+
+</section>
 <section class="slide">
   <h2>Historia #1: ver la lista de cursos</h2>
   <!-- rails g mini_test:feature BrowseCourse -->
@@ -400,22 +407,6 @@ end</textarea>
 </section>
 
 <section class="slide">
-  <h2>Javascript</h2>
-  <ul>
-    <li>Hasta ahora hemos usado <em>rack_test</em> para simular el navegador</li>
-    <li>No tiene soporte para Javascript</li>
-    <li>Pero Capybara puede usar otros drivers:
-      <ul>
-        <li>Selenium (<em>selenium-webdriver</em>)</li>
-        <li>Webkit (<em>capybara-webkit</em>)</li>
-        <li>Phantomjs (<em>poltergeist</em>)</li>
-        <li>... y más</li>
-      </ul>
-    </li>
-  </ul>
-</section>
-
-<section class="slide">
   <h2>Transacciones</h2>
   <ul>
     <li>No nos hemos preocupado de cómo se borran los datos tras cada prueba</li>
@@ -426,6 +417,7 @@ end</textarea>
         <li>Usar un <a href="http://blog.plataformatec.com.br/2011/12/three-tips-to-improve-the-performance-of-your-test-suite/">hack</a>
         para compartir la conexión a la base de datos</li>
         <li>No usar transacciones</li>
+        <li>Usar transacciones de forma selectiva</li>
       </ol>
     </li>
   </ul>
@@ -459,23 +451,6 @@ end</textarea>
 <section class="slide">
   <h2>Historia #3: inscribirse</h2>
   <h3>Simplificando</h3>
-  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">
-  class ActiveSupport::TestCase
-    # ...
-    include Warden::Test::Helpers
-    Warden.test_mode!
-
-    # ...
-    after do
-      DatabaseCleaner.clean
-      Warden.test_reset!
-    end
-  end</textarea>
-</section>
-
-<section class="slide">
-  <h2>Historia #3: inscribirse</h2>
-  <h3>Simplificando</h3>
   <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
 
   feature 'EnrollInACourse' do
@@ -487,6 +462,23 @@ end</textarea>
       click_link 'Enroll now!'
       page.must_have_content 'You are enrolled!'
       page.wont_have_link 'Enroll now!'
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #3: inscribirse</h2>
+  <h3>Simplificando</h3>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">
+  class ActiveSupport::TestCase
+    # ...
+    include Warden::Test::Helpers
+    Warden.test_mode!
+
+    # ...
+    after do
+      DatabaseCleaner.clean
+      Warden.test_reset!
     end
   end</textarea>
 </section>
@@ -536,7 +528,8 @@ end</textarea>
 </section>
 
 <section class="slide">
-  <h2>Subject, let, describe e it</h2>
+  <h2>Prueba #1: el modelo Student</h2>
+  <h3>describe, it, subject y let</h3>
   <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
 
   describe Student do
@@ -548,7 +541,6 @@ end</textarea>
 
     describe '#enrolled_in?' do
       it 'returns true if student is enrolled in' do
-        subject.reload
         subject.enrollments.create(course: course)
         subject.enrolled_in?(course).must_equal true
       end
@@ -561,7 +553,38 @@ end</textarea>
 </section>
 
 <section class="slide">
-  <h2>Probando validaciones</h2>
+  <h2>Prueba #1: el modelo Student</h2>
+  <h3>Anidando</h3>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
+
+  describe Student do
+    subject do
+      FactoryGirl.create(:student)
+    end
+
+    let(:course) { FactoryGirl.create(:course) }
+
+    describe 'student is enrolled in' do
+      before do
+        subject.enrollments.create(course: course)
+      end
+
+      it 'returns true if student is enrolled in' do
+        subject.enrolled_in?(course).must_equal true
+      end
+    end
+
+    describe 'student is not enrolled' do
+      it 'returns false if student is not enrolled' do
+        subject.enrolled_in?(course).must_equal false
+      end
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Prueba #2: el modelo Course</h2>
+  <h3>Probando validaciones</h3>
   <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
 
   describe Course do
@@ -573,6 +596,46 @@ end</textarea>
       FactoryGirl.build(:course, title: '').wont_be :valid?
     end
   end</textarea>
+</section>
+
+<section class="slide">
+  <h1>Otras herramientas</h1>
+</section>
+
+<section class="slide">
+  <h2>Guard</h2>
+  <ul>
+    <li><a href="https://github.com/guard/guard">https://github.com/guard/guard</a></li>
+    <li>Ejecuta las pruebas siempre que hay un cambio en un fichero</li>
+    <li>Diferentes tipos de notificaciones</li>
+    <li>Ayuda a evitar que «rompamos» cosas sin darnos cuenta</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Simplecov</h2>
+  <ul>
+    <li><a href="https://github.com/colszowka/simplecov">https://github.com/colszowka/simplecov</a></li>
+    <li>Herramienta para ver la cobertura de las pruebas</li>
+    <li>Permite saber qué partes del código se «ejercitan»</li>
+  </ul>
+  <img src="https://github-camo.global.ssl.fastly.net/5d9b874a778392ff6180d297faa362f0b32fcd62/687474703a2f2f636f6c737a6f776b612e6769746875622e636f6d2f73696d706c65636f762f6465766973655f726573756c742d302e352e332e706e67">
+</section>
+
+<section class="slide">
+  <h2>Integración continua</h2>
+  <ul>
+    <li><a href="http://jenkins-ci.org/">http://jenkins-ci.org/</a></li>
+    <li><a href="http://www.capistranorb.com/">http://www.capistranorb.com/</a></li>
+    <li>Tiene su origen en el <em>Extreme programming</em></li>
+    <li>Se ejecutan las pruebas y se hace todo el trabajo de integración frecuentemente</li>
+  </ul>
+  <img src="http://jenkins-ci.org/sites/default/files/jenkins_logo.png">
+  <img src="http://www.capistranorb.com/images/CapistranoLogo.png">
+</section>
+
+<section class="slide">
+  <h1>¿Preguntas?</h1>
 </section>
 <!-- End slides. -->
 
