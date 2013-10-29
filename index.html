@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Testing en Ruby on Rails</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" href="core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" href="extensions/goto/deck.goto.css">
+  <link rel="stylesheet" href="extensions/menu/deck.menu.css">
+  <link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" href="extensions/status/deck.status.css">
+  <link rel="stylesheet" href="extensions/hash/deck.hash.css">
+  <link rel="stylesheet" href="extensions/scale/deck.scale.css">
+  <link rel="stylesheet" href="extensions/codemirror/codemirror.css">
+  <link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+  <link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" href="themes/style/swiss.css">
+
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+
+  <!-- Required Modernizr file -->
+  <script src="modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+  <h1>Testing en Rails con minitest</h1>
+</section>
+
+<section class="slide">
+  <h1>Test Driven Development (TDD)</h1>
+</section>
+
+<section class="slide">
+  <h2>red, green, refactor!</h2>
+  <ul>
+    <li>Escribir las pruebas antes que el código y refactorizar después
+      <ol>
+        <li>Escribimos las pruebas y comprobamos que fallan</li>
+        <li>Implementamos el código que hace que las pruebas pasen</li>
+        <li>Refactorizamos</li>
+      </ol>
+    </li>
+    <li>Kent Beck</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Ventajas</h2>
+  <ul>
+    <li>Código probado y relativamente limpio</li>
+    <li>Ayuda a plantear ciertas cuestiones antes de que sea tarde</li>
+    <li>Asegura una buena cobertura</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h1>Behaviour Driven Development (BDD)</h1>
+</section>
+
+<section class="slide">
+  <h2>TDD + buenas prácticas</h2>
+  <!-- <ul> -->
+  <!--   <li>TDD + ideas del domain&#45;driven design y análisis orientado a objetos</li> -->
+  <!-- </ul> -->
+  <blockquote>BDD builds upon TDD by formalising the good habits of the best TDD practitioners.</blockquote>
+  <cite>Matt Wynne</cite>
+</section>
+
+<section class="slide">
+  <h2>Buenas prácticas</h2>
+  <ol>
+    <li>Trabajar desde afuera hacia adentro</li>
+    <li>Usar ejemplos para escribir la especificación (escenarios)</li>
+    <li>Usar un lenguaje unificado</li>
+  </ol>
+</section>
+
+<section class="slide">
+  <h1>Plataformas en Ruby</h1>
+</section>
+
+<section class="slide">
+  <h2>Test::Unit</h2>
+  <ul>
+    <li>Estilo <em>xUnit</em></li>
+    <li>En la biblioteca estándar hasta Ruby 1.8</li>
+    <li>Sustituido por Minitest en versiones recientes de Ruby</li>
+    <li>Sigue disponible mediante la gema <em>test-unit</em></li>
+  </ul>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require 'test/unit'
+
+  class TestRoman &lt; Test::Unit::TestCase
+    def test_simple
+      assert_equal('i',  Roman.new(1).to_s)
+      assert_equal('ix', Roman.new(9).to_s)
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>RSpec</h2>
+  <ul>
+    <li>Orientado al BDD</li>
+    <li>Muy popular y con un montón de funcionalidades</li>
+    <li>Busca que las especificaciones se puedan leer de forma natural natural</li>
+    <li>No exento de cierta polémica</li>
+  </ul>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require 'spec/spec_helper'
+
+  describe Game do
+    describe "#score" do
+      it "returns 0 for all gutter game" do
+        game = Game.new
+        20.times { game.roll(0) }
+        expect(game.score).to eq(0)
+      end
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Cucumber</h2>
+  <ul>
+    <li>Construido sobre RSpec</li>
+    <li>Alcanzó gran popularidad</li>
+    <li>Muy cercano al lenguaje del cliente (que se supone que se debe implicar al escribir pruebas)</li>
+  </ul>
+<pre>
+Feature: Search courses
+  In order to ensure better utilization of courses
+  Potential students should be able to search for courses
+
+  Scenario: Search by topic
+    Given there are 240 courses which do not have the topic "biology"
+    And there are 2 courses A001, B205 that each have "biology" as one of the topics
+    When I search for "biology"
+    Then I should see the following courses:
+      | Course code |
+      | A001        |
+      | B205        |
+</pre>
+</section>
+
+<section class="slide">
+  <h2>Minitest</h2>
+  <ul>
+    <li>El <em>new kid on the block</em></li>
+    <li>Framework ligero y relativamente pequeño (en código y funcionalidad)</li>
+    <li>Tiene un montón de extensiones</li>
+    <li>En la biblioteca estándar de Ruby desde la 1.9</li>
+    <li>Dos modos: estilo Test::Unit y estilo Spec</li>
+    <li>Opción por defecto en Rails 4</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h1>Tipos de pruebas</h1>
+</section>
+
+<section class="slide">
+  <h2>Tipos de pruebas</h2>
+  <ul>
+    <li><strong>Unitarias (modelos)</strong></li>
+    <li>Rutas</li>
+    <li>Controlador</li>
+    <li>Vistas</li>
+    <li><strong>Helpers</strong></li>
+    <li><strong>Funcionales (features)</strong></li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h1>Ejemplo</h1>
+</section>
+
+<section class="slide">
+  <h2>Gestión de cursos</h2>
+  <ul>
+    <li>Aplicación para gestionar cursos</li>
+    <li>Funcionalidad reducida: los alumnos pueden acceder a la aplicación,
+    navegar por los cursos e inscribirse.</li>
+    <li>¿Alguien propone un modelo de dominio?</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Instalación de Minitest</h2>
+
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  gem 'minitest-rails', group: %i(development test)
+
+  group :test do
+    gem 'minitest-reporters'
+    gem 'minitest-rails-capybara'
+  end</textarea>
+  <ul>
+    <li>minitest-rails: soporte para el DSL al estilo <em>Spec</em></li>
+    <li>minitest-rails-capybara: integración con Capybara</li>
+    <li>minitest-reporters: permite usar diferentes modos de indicar el progreso de las pruebas.</li>
+    <li>Hay otras extensiones interesantes</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Configuración de Minitest</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  config.generators do |g|
+      g.test_framework :mini_test, spec: true, fixture: false
+    end</textarea>
+
+  <ul>
+    <li>Los generadores usarán Minitest con la sintaxis de <em>Spec</em></li>
+    <li>Desactiva los <em>fixtures</em></li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>test/test_helper.rb</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  ENV["RAILS_ENV"] = "test"
+  require File.expand_path("../../config/environment", __FILE__)
+  require "rails/test_help"
+  require "minitest/rails"
+  require 'minitest/reporters'
+
+  # To add Capybara feature tests add `gem "minitest-rails-capybara"`
+  # to the test group in the Gemfile and uncomment the following:
+  require "minitest/rails/capybara"
+
+  # Uncomment for awesome colorful output
+  require "minitest/pride"
+
+  Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+  class ActiveSupport::TestCase
+    # Add more helper methods to be used by all tests here...
+  end
+end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #1: ver la lista de cursos</h2>
+  <!-- rails g mini_test:feature BrowseCourse -->
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
+
+  feature "Browse courses" do
+    scenario "browse open courses" do
+      visit root_path
+      within('.courses') do
+        page.must_have_link 'Programming Ruby'
+      end
+    end
+  end</textarea>
+  <!-- rake minitest:features -->
+</section>
+
+<section class="slide">
+  <h2>Fixtures</h2>
+  <textarea id="code" name="code" class="code" mode="yaml" style="display: none;">  git_destruction:
+    title: "Git respository destruction"
+    description: "Lorem ipsum..."
+    start_date: <%= Date.current + 1.month %>
+    teacher: "Scirocco"
+    workload: 40
+
+  programming_ruby:
+    title: "Programming Ruby"
+    description: "Lorem ipsum..."
+    start_date: <%= Date.current + 1.week %>
+    teacher: "CiTEC, SL"
+    workload: 5
+
+  blues_appreciation:
+    title: "Blues Appreciation"
+    description: "Lorem ipsum..."
+    start_date: <%= Date.current + 2.months %>
+    teacher: "CiTEC, SL"
+    workload: 7
+  </textarea>
+</section>
+
+<section class="slide">
+  <h2>Factorías</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  FactoryGirl.create do
+    factory :course do
+      sequence(:title) { |n| "Curso ##{n}" }
+      start_date       { Date.current + 1.month }
+      description      'Lorem ipsum...'
+      teacher          'CiTEC, SL'
+      workload         5
+
+      factory :past_course do
+        start_date     { 1.year.ago }
+      end
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Fixtures vs factorías</h2>
+  <ul>
+    <li>Fixtures:
+      <ul>
+        <li>Vienen por defecto en Ruby on Rails</li>
+        <li>Son muy rápidas</li>
+        <li>A medida que el proyecto crece, son difíciles de mantener</li>
+      </ul>
+    </li>
+    <li>Factorías:
+      <ul>
+        <li>Son objetos del modelo: ejecutan <em>callbacks</em>, validaciones, etc.</li>
+        <li>Es fácil generar objetos asociados</li>
+        <li>Si no se manejan con cuidado, pueden generar muchos objetos</li>
+        <li>Lentas</li>
+        <li>Fáciles de mantener</li>
+        <li><a href="https://github.com/thoughtbot/factory_girl">factory_girl</a>,
+          <a href="https://github.com/notahat/machinist">Machinist</a>,
+          <a href="https://github.com/paulelliott/fabrication">Fabrication</a>,
+          <a href="https://www.ruby-toolbox.com/categories/rails_fixture_replacement">etc.</a></li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Historia #1: ver la lista de cursos</h2>
+  <h3>Usando factorías</h3>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require 'test_helper'
+
+  feature 'Browse courses' do
+    scenario 'browse open courses' do
+      FactoryGirl.create(:course, title: 'Programming Ruby')
+      visit root_path
+      within('.courses') do
+        page.must_have_link 'Programming Ruby'
+      end
+    end
+
+    scenario 'browse list when no courses exist' do
+      visit root_path
+      page.wont_have_link 'Programming Ruby'
+      page.must_have_content 'Nothing to see!'
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #2: registrarse</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require 'test_helper'
+
+  feature 'Sign-up student' do
+  background do
+    visit new_student_registration_path
+  end
+
+  scenario 'A student signs up successfully' do
+    fill_in 'Email', with: 'sistemas@citec-sl.com'
+    fill_in 'Password', with: 'secret.123'
+    fill_in 'Password confirmation', with: 'secret.123'
+    click_button 'Sign up'
+    page.must_have_content 'Welcome! You have signed up successfully.'
+    current_path.must_equal root_path
+  end
+
+  scenario 'Sign up fails because password is too short'</textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #3: inscribirse</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
+
+  feature "EnrollInACourse" do
+    scenario "Enroll successfully", js: true do
+      student = FactoryGirl.create(:student)
+      FactoryGirl.create(:course, title: 'Programming Ruby')
+      visit root_path
+      click_link 'Sign in'
+      fill_in 'Email', with: student.email
+      fill_in 'Password', with: 'password'
+      click_button 'Sign in'
+      page.must_have_content 'Signed in successfully'
+      click_link 'Programming Ruby'
+      click_link 'Enroll now!'
+      page.must_have_content "You are enrolled!"
+      page.wont_have_link 'Enroll now!'
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Javascript</h2>
+  <ul>
+    <li>Hasta ahora hemos usado <em>rack_test</em> para simular el navegador</li>
+    <li>No tiene soporte para Javascript</li>
+    <li>Pero Capybara puede usar otros drivers:
+      <ul>
+        <li>Selenium (<em>selenium-webdriver</em>)</li>
+        <li>Webkit (<em>capybara-webkit</em>)</li>
+        <li>Phantomjs (<em>poltergeist</em>)</li>
+        <li>... y más</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Transacciones</h2>
+  <ul>
+    <li>No nos hemos preocupado de cómo se borran los datos tras cada prueba</li>
+    <li>Se usa una transacción para cada prueba, terminando en un <em>rollback</em>
+    <li>Procesos separados: las transacciones no están disponibles para el cliente</li>
+    <li>Soluciones:
+      <ol>
+        <li>Usar un <a href="http://blog.plataformatec.com.br/2011/12/three-tips-to-improve-the-performance-of-your-test-suite/">hack</a>
+        para compartir la conexión a la base de datos</li>
+        <li>No usar transacciones</li>
+      </ol>
+    </li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>database_cleaner</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  DatabaseCleaner.strategy = :transaction
+  DatabaseCleaner.clean_with(:truncation)
+
+  class ActiveSupport::TestCase
+    self.use_transactional_fixtures = false
+
+    before do
+      DatabaseCleaner.strategy =
+        if respond_to?(:metadata) && metadata[:js] == true
+          :truncation
+        else
+          :transaction
+        end
+      DatabaseCleaner.start
+    end
+
+    after do
+      DatabaseCleaner.clean
+    end
+  end
+  </textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #3: inscribirse</h2>
+  <h3>Simplificando</h3>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">
+  class ActiveSupport::TestCase
+    # ...
+    include Warden::Test::Helpers
+    Warden.test_mode!
+
+    # ...
+    after do
+      DatabaseCleaner.clean
+      Warden.test_reset!
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #3: inscribirse</h2>
+  <h3>Simplificando</h3>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
+
+  feature 'EnrollInACourse' do
+    scenario 'enroll in a course successfully', js: true do
+      FactoryGirl.create(:course, title: 'Programming Ruby')
+      login_as(FactoryGirl.create(:student), scope: :student)
+      visit root_path
+      click_link 'Programming Ruby'
+      click_link 'Enroll now!'
+      page.must_have_content 'You are enrolled!'
+      page.wont_have_link 'Enroll now!'
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Historia #3: inscribirse</h2>
+  <h3>Agrupando pruebas</h3>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require 'test_helper'
+
+  feature 'EnrollInACourse' do
+    background do
+      @course = FactoryGirl.create(:course, title: 'Programming Ruby!')
+    end
+
+    describe 'when the student is logged in' do
+      before do
+        @student = FactoryGirl.create(:student)
+        login_as(@student, scope: :student)
+        visit root_path
+        click_link 'Programming Ruby'
+      end
+
+      scenario 'she can enroll in the course', js: true do
+        visit root_path
+        click_link 'Programming Ruby'
+        click_link 'Enroll now!'
+        page.must_have_content 'You are enrolled!'
+        page.wont_have_link 'Enroll now!'
+      end
+
+      scenario 'she cannot enroll if she is enrolled yet' do
+        Enrollment.create(course: @course, student: @student)
+        visit root_path
+        click_link 'Programming Ruby'
+        page.wont_have_link 'Enroll now!'
+      end
+    end
+
+    describe 'when the student is not logged in' do
+      scenario 'she cannot enroll in the course'
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h1>Pruebas unitarias</h1>
+</section>
+
+<section class="slide">
+  <h2>Subject, let, describe e it</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
+
+  describe Student do
+    subject do
+      FactoryGirl.create(:student)
+    end
+
+    let(:course) { FactoryGirl.create(:course) }
+
+    describe '#enrolled_in?' do
+      it 'returns true if student is enrolled in' do
+        subject.reload
+        subject.enrollments.create(course: course)
+        subject.enrolled_in?(course).must_equal true
+      end
+
+      it 'returns false if student is not enrolled' do
+        subject.enrolled_in?(course).must_equal false
+      end
+    end
+  end</textarea>
+</section>
+
+<section class="slide">
+  <h2>Probando validaciones</h2>
+  <textarea id="code" name="code" class="code" mode="ruby" style="display: none;">  require "test_helper"
+
+  describe Course do
+    it 'have a valid factory' do
+      FactoryGirl.create(:course).must_be :valid?
+    end
+
+    it 'requires a title' do
+      FactoryGirl.build(:course, title: '').wont_be :valid?
+    end
+  end</textarea>
+</section>
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+  <span class="deck-status-current"></span>
+  /
+  <span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+  <label for="goto-slide">Go to slide:</label>
+  <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+  <datalist id="goto-datalist"></datalist>
+  <input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+<script src="extensions/scale/deck.scale.js"></script>
+<script src="extensions/codemirror/codemirror.js"></script>
+<script src="extensions/codemirror/mode/ruby/ruby.js"></script>
+<script src="extensions/codemirror/mode/yaml/yaml.js"></script>
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>
