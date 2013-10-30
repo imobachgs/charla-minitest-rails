@@ -564,19 +564,21 @@ end</textarea>
 
     let(:course) { FactoryGirl.create(:course) }
 
-    describe 'student is enrolled in' do
-      before do
-        subject.enrollments.create(course: course)
+    describe '#enrolled_in?' do
+      describe 'student is enrolled in' do
+        before do
+          subject.enrollments.create(course: course)
+        end
+
+        it 'returns true' do
+          subject.enrolled_in?(course).must_equal true
+        end
       end
 
-      it 'returns true if student is enrolled in' do
-        subject.enrolled_in?(course).must_equal true
-      end
-    end
-
-    describe 'student is not enrolled' do
-      it 'returns false if student is not enrolled' do
-        subject.enrolled_in?(course).must_equal false
+      describe 'student is not enrolled' do
+        it 'returns false' do
+          subject.enrolled_in?(course).must_equal false
+        end
       end
     end
   end</textarea>
